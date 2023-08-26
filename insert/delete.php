@@ -1,8 +1,7 @@
 <?php
-$deleteId=$_REQUEST['id'];
-if(isset($_REQUEST['pro_pic'])) {
+$deleteId = $_REQUEST['id'];
+if (isset($_REQUEST['pro_pic'])) {
     $deletPic = $_REQUEST['pro_pic'];
-
 
 
     $con = mysqli_connect('localhost', 'root', '', 'test');
@@ -10,9 +9,8 @@ if(isset($_REQUEST['pro_pic'])) {
     /*echo $query;*/
     $result = mysqli_query($con, $query);
     if ($result) {
-        if(file_exists('upImages'))
-        {
-            $t=unlink('upImages/'.$deletPic);
+        if (file_exists('upImages')) {
+            $t = unlink('upImages/' . $deletPic);
             header('location:login.php?msg=Delete successfully');
 
         }

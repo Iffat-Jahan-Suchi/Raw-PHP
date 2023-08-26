@@ -18,6 +18,7 @@ while ($row=mysqli_fetch_assoc($result))
     $name= $row['user_name'];
      $email=$row['email'];
      $pass=$row['password'];
+     $pic=$row['image'];
 }
 
 
@@ -26,7 +27,7 @@ while ($row=mysqli_fetch_assoc($result))
 <div class="container mx-auto mt-2">
     <div class="row">
         <div class="">
-            <form action="update.php" method="post">
+            <form action="update.php" method="post" enctype="multipart/form-data">
                 <h2 class="text-center text-info">Edit Info</h2>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label"> Input Name</label>
@@ -40,6 +41,12 @@ while ($row=mysqli_fetch_assoc($result))
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Input Password</label>
                     <input type="password" class="form-control"  value="<?php  echo $pass?>" name="password" id="exampleInputPassword1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Image</label>
+                    <input type="file" class="form-control" name="image" id="exampleInputPassword1">
+                    <img src="upImages/<?php echo $pic?>" height="50" width="50" alt="">
+                    <input type="text" name="oldImage" value="<?php echo $pic; ?>">
                 </div>
                 <button type="submit"  name="submit" value="submit" class="btn btn btn-outline-primary form-control">Update Data</button>
                 <input type="hidden" name="editId" value="<?php echo $editId?>">
