@@ -12,10 +12,12 @@ if(isset($_REQUEST['pro_pic'])) {
     if ($result) {
         if(file_exists('upImages'))
         {
-            unlink('upImages/$deletPic');
+            $t=unlink('upImages/'.$deletPic);
+            header('location:login.php?msg=Delete successfully');
+
         }
 
-        header('location:login.php?msg=Delete successfully');
+
     } else {
         echo "no";
     }
