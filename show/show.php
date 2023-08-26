@@ -22,6 +22,7 @@ if ($count > 0) {
         <th scope="col">Email</th>
         <th scope="col">Edit</th>
         <th scope="col">Email</th>
+        <th scope="col">pic</th>
     </tr>
     </thead>
     <?php
@@ -30,6 +31,7 @@ if ($count > 0) {
         $id = $row['user_id'];
         $name = $row['user_name'];
         $email = $row['email'];
+        $pic = $row['image'];
         $count = mysqli_num_rows($result);
         ?>
     <tboday>
@@ -38,7 +40,7 @@ if ($count > 0) {
             <td><?php echo $name ?></td>
             <td><?php echo $email ?></td>
             <td><a href="">Edit</a></td>
-            <td><a href="delete.php?id=<?php echo $id ?>"<>Delete</a></td>
+            <td><a href="delete.php?id=<?php echo $id ?>&pic=<?php echo $pic?>"<>Delete</a></td>
         </tr>
     </tboday>
 

@@ -2,29 +2,34 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <?php
+
+
 if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $pass = $_POST['password'];
-    if($name&&$email&&$pass)
-    {
-        $con = (mysqli_connect('localhost', 'root', '', 'test'));
-        /*if ($con) {
-            echo "connet";
-        }*/
-        $query = "INSERT INTO users (user_name,email,password)";
-        $query .= "VALUES('$name','$email','$pass')";
+    $file = $_FILES['image'];
+    $fileName = $file['name'];
+    $tmp = $file['tmp_name'];
+    if (!empty($fileName)) {
+        $loc = 'upImages/';
+        move_uploaded_file($tmp, $loc . $fileName);
+    } else {
+        echo "no file";
+    }
+
+
+    if ($name && $email && $pass && $fileName) {
+        $con = mysqli_connect('localhost', 'root', '', 'test');
+        $query = "INSERT INTO users (user_name,email,password,image)";
+        $query .= "VALUES('$name','$email','$pass','$fileName')";
         $result = mysqli_query($con, $query);
         if ($result) {
-            echo 'insert';
+            echo "insert successfully";
         } else {
             echo "not insert";
         }
     }
-    else{
-        echo "please fill up the field";
-    }
-
 
 
 }
@@ -33,13 +38,8 @@ if (isset($_POST['submit'])) {
 
 <div class="container mx-auto mt-2">
     <h2 class="bg-success text-center text-white">Information Form</h2>
-   <!-- <form action="login.php" method="post">
-        Input Name:<input type="text" name="name" placeholder="enter your name" >
-        Input Email:<input type="email" name="email" placeholder="enter your email" >
-        Input Password:<input type="password" name="password" placeholder="enter your password" >
-        <input type="submit" name="submit">
-    </form>-->
-    <form action="login.php" method="post">
+
+    <form action="login.php" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"> Input Name</label>
             <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -53,10 +53,16 @@ if (isset($_POST['submit'])) {
             <label for="exampleInputPassword1" class="form-label">Input Password</label>
             <input type="password" class="form-control" name="password" id="exampleInputPassword1">
         </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Picture</label>
+            <input type="file" class="form-control" name="image" id="exampleInputPassword1">
+        </div>
         <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 
+
+<!--//fatch/show-->
 <?php
 $con = (mysqli_connect('localhost', 'root', '', 'test'));
 
@@ -64,9 +70,11 @@ $con = (mysqli_connect('localhost', 'root', '', 'test'));
 $query = "SELECT * FROM users";
 $result = mysqli_query($con, $query);
 $count = mysqli_num_rows($result);
-if(isset($_REQUEST['msg']))
-{
+if (isset($_REQUEST['msg'])) {
     echo '<h2 class="bg-warning">Delete Successfully</h2>';
+}
+if (isset($_REQUEST['update'])) {
+    echo '<h2 class="bg-warning">Update Successfully</h2>';
 }
 if ($count > 0) {
     ?>
@@ -75,28 +83,38 @@ if ($count > 0) {
         <thead>
         <tr>
 
+            <th scope="col">SI_No</th>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Email</th>
+            <th scope="col">Image</th>
+            <th scope="col">Action</th>
+
         </tr>
         </thead>
         <?php
+        $serial = 0;
         while ($row = mysqli_fetch_assoc($result)) {
 
             $id = $row['user_id'];
             $name = $row['user_name'];
             $email = $row['email'];
+            $pic = $row['image'];
             $count = mysqli_num_rows($result);
+
+            $serial++;
             ?>
             <tboday>
                 <tr>
+                    <td><?php echo $serial ?></td>
                     <td><?php echo $id ?></td>
                     <td><?php echo $name ?></td>
                     <td><?php echo $email ?></td>
-                    <td><a href="edit.php?id=<?php echo $id ?>">Edit</a></td>
-                    <td><a href="delete.php?id=<?php echo $id ?>"<>Delete</a></td>
+                    <td><img src="upImages/<?php echo $pic; ?>" height="50px" width="50px" alt=""></td>
+                    <td><a href="edit.php?id=<?php echo $id ?>">Edit||</a>
+                        <a onclick="return confirm('are you sure to delete this')" href="delete.php?id=<?php echo $id ?>&pro_pic=<?php echo $pic; ?>">Delete</a>
+                    </td>
+
                 </tr>
             </tboday>
 

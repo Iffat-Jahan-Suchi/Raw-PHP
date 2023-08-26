@@ -5,7 +5,7 @@ $tmp=$_FILES['file']['tmp_name'];
 
 if(!empty($myFile))
 {
-$loc="uploads/";
+$loc="upImages/";
 if(move_uploaded_file($tmp,$loc.$myFile))
 {
     echo 'successfull <br>';
