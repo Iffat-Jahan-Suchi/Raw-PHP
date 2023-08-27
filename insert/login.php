@@ -114,7 +114,6 @@ if ($count > 0) {
                     <td><a href="edit.php?id=<?php echo $id ?>">Edit||</a>
                         <a onclick="return confirm('are you sure to delete this')" href="delete.php?id=<?php echo $id ?>&pro_pic=<?php echo $pic; ?>">Delete</a>
                     </td>
-
                 </tr>
             </tboday>
 
