@@ -124,6 +124,59 @@ if ($count > 0) {
     <?php
 }
 ?>
+<?php
+$con = mysqli_connect('localhost', 'root', '', 'test');
+if (isset($_REQUEST['search'])) {
+    $name = $_REQUEST['name'];
+    $query = "SELECT * FROM users WHERE user_name LIKE '%$name%'";
+    $result = mysqli_query($con, $query);
+    $count = mysqli_num_rows($result);
+    if ($count > 0) {
+        ?>
+        <table class="table bg-info mx-auto">
+            <thead>
+            <tr>
+
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Image</th>
+            </tr>
+            </thead>
+            <?php
+            while ($row = mysqli_fetch_assoc($result)) {
+
+                $id = $row['user_id'];
+                $name = $row['user_name'];
+                $email = $row['email'];
+                $pic = $row['image'];
+
+                $count = mysqli_num_rows($result);
+                ?>
+                <tboday>
+                    <tr>
+                        <td><?php echo $id ?></td>
+                        <td><?php echo $name ?></td>
+                        <td><?php echo $email ?></td>
+                        <td><img src="upImages/<?php echo $pic?>" alt="" height="50px" width="50px"></td>
+
+                    </tr>
+                </tboday>
+                <?php
+
+            }
+            ?>
+        </table>
+        <?php
+    }
+}
+?>
+
+
+<form action="" method="post">
+    <input type="text" name="name" placeholder="enter search user">
+    <input type="submit" name="search" value="search">
+</form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
