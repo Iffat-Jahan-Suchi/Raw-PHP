@@ -12,6 +12,7 @@ if(isset($_REQUEST['submit']))
     if($count)
     {
         $_SESSION['name']=$name;
+        $_SESSION['current_time']=time();
         header("location:login.php");
     }
     else

@@ -2,6 +2,10 @@
 session_start();
 if($_SESSION['name']==true)
 {
+    if((time()-$_SESSION['current_time'])>30)
+    {
+        header('location:logout.php');
+    }
     echo $_SESSION['name'];
 
 ?>
